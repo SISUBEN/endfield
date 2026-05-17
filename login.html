@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>登录 — 终末地工业</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+        --bg-white: #ffffff;
+        --bg-light: #fafafa;
+        --bg-dark: #191919;
+        --accent: #fffa00;
+        --text-black: #191919;
+        --text-gray: #666666;
+        --text-light: #999999;
+        --border: #e5e5e5;
+        --font-en: 'Rajdhani', sans-serif;
+    }
+    body {
+        font-family: 'PingFang SC', 'Noto Sans SC', sans-serif;
+        background: var(--bg-white);
+        color: var(--text-black);
+        min-height: 100vh;
+        display: flex;
+        animation: pageIn .35s ease both;
+    }
+    @keyframes pageIn {
+        from { opacity: 0; transform: translateY(12px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+    /* LEFT PANEL */
+    .login-left {
+        width: 420px;
+        flex-shrink: 0;
+        background: var(--bg-dark);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 3rem;
+        position: relative;
+        overflow: hidden;
+    }
+    .login-left::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(255,250,0,0.05) 0%, transparent 60%);
+        pointer-events: none;
+    }
+    .deco-bar {
+        position: absolute;
+        left: 0; top: 0; bottom: 0;
+        width: 4px;
+        background: linear-gradient(to bottom, #ff1aac, #00ffa2, #fffa00);
+    }
+    .left-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        text-decoration: none;
+    }
+    .left-brand img {
+        height: 28px;
+        filter: brightness(0) invert(1);
+    }
+    .left-brand-text {
+        font-family: var(--font-en);
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+        color: rgba(255,255,255,0.4);
+    }
+    .left-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 3rem 0;
+    }
+    .left-body .tag {
+        font-family: var(--font-en);
+        font-size: 0.65rem;
+        letter-spacing: 3px;
+        color: var(--accent);
+        margin-bottom: 1.25rem;
+    }
+    .left-body h2 {
+        font-family: var(--font-en);
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        color: #fff;
+        line-height: 1.2;
+        margin-bottom: 1rem;
+    }
+    .left-body p {
+        font-size: 0.85rem;
+        color: rgba(255,255,255,0.4);
+        line-height: 1.7;
+        max-width: 280px;
+    }
+    .left-footer {
+        font-family: var(--font-en);
+        font-size: 0.62rem;
+        letter-spacing: 1px;
+        color: rgba(255,255,255,0.2);
+    }
+    /* RIGHT PANEL */
+    .login-right {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem 4rem;
+        background: var(--bg-white);
+    }
+    .login-wrap {
+        width: 100%;
+        max-width: 380px;
+    }
+    .login-header {
+        margin-bottom: 2.5rem;
+    }
+    .login-header .label {
+        font-family: var(--font-en);
+        font-size: 0.7rem;
+        letter-spacing: 3px;
+        color: var(--text-light);
+        margin-bottom: 0.75rem;
+    }
+    .login-header h1 {
+        font-family: var(--font-en);
+        font-size: 1.6rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        color: var(--text-black);
+    }
+    .login-header p {
+        margin-top: 0.4rem;
+        font-size: 0.82rem;
+        color: var(--text-light);
+    }
+    .form-group {
+        margin-bottom: 1.25rem;
+    }
+    .form-group label {
+        display: block;
+        font-family: var(--font-en);
+        font-size: 0.68rem;
+        letter-spacing: 1.5px;
+        color: var(--text-light);
+        margin-bottom: 0.5rem;
+    }
+    .form-group input {
+        width: 100%;
+        padding: 0.85rem 1rem;
+        background: var(--bg-light);
+        border: 1px solid var(--border);
+        border-radius: .25rem;
+        color: var(--text-black);
+        font-size: 0.9rem;
+        font-family: inherit;
+        outline: none;
+        transition: border-color .2s ease, background .2s ease;
+    }
+    .form-group input:focus {
+        border-color: var(--text-black);
+        background: var(--bg-white);
+    }
+    .form-group input::placeholder { color: var(--text-light); }
+    .form-options {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.75rem;
+        font-size: 0.8rem;
+    }
+    .form-options label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-gray);
+        cursor: pointer;
+    }
+    .form-options input[type="checkbox"] { accent-color: var(--bg-dark); }
+    .form-options a {
+        color: var(--text-light);
+        text-decoration: none;
+        transition: color .2s;
+    }
+    .form-options a:hover { color: var(--text-black); }
+    .btn-submit {
+        width: 100%;
+        padding: 0.9rem;
+        background: var(--accent);
+        color: var(--bg-dark);
+        border: none;
+        border-radius: .25rem;
+        font-family: var(--font-en);
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        cursor: pointer;
+        transition: background .2s ease;
+        border-left: .75rem solid rgba(0,0,0,0.12);
+    }
+    .btn-submit:hover { background: #efe701; }
+    .login-divider {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin: 1.5rem 0;
+        color: var(--text-light);
+        font-size: 0.75rem;
+    }
+    .login-divider::before, .login-divider::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+    }
+    .btn-employee {
+        display: block;
+        width: 100%;
+        padding: 0.85rem;
+        background: transparent;
+        border: 1px solid var(--border);
+        border-radius: .25rem;
+        color: var(--text-gray);
+        font-family: var(--font-en);
+        font-size: 0.78rem;
+        letter-spacing: 1.5px;
+        text-align: center;
+        text-decoration: none;
+        transition: border-color .2s, color .2s;
+    }
+    .btn-employee:hover {
+        border-color: var(--text-black);
+        color: var(--text-black);
+    }
+    @media (max-width: 700px) {
+        body { flex-direction: column; }
+        .login-left { width: 100%; min-height: 200px; }
+        .left-body { padding: 1.5rem 0; }
+        .login-right { padding: 2.5rem 1.5rem; }
+    }
+</style>
+</head>
+<body>
+
+<div class="login-left">
+    <div class="deco-bar"></div>
+    <a href="index.html" class="left-brand">
+        <img src="assets/endfield-industries.svg" alt="Endfield Industries">
+        <span class="left-brand-text">ENDFIELD INDUSTRIES</span>
+    </a>
+    <div class="left-body">
+        <p class="tag">SECURE ACCESS</p>
+        <h2>ENDFIELD<br>PORTAL</h2>
+        <p>终末地工业内部系统入口。请使用您的工号凭证登录，未经授权的访问将被记录并上报。</p>
+    </div>
+    <p class="left-footer">塔卫-II NETWORK · ENCRYPTED</p>
+</div>
+
+<div class="login-right">
+    <div class="login-wrap">
+        <div class="login-header">
+            <p class="label">SIGN IN</p>
+            <h1>账户登录</h1>
+            <p>请使用您的终末地工业凭证登录</p>
+        </div>
+        <form onsubmit="return false;">
+            <div class="form-group">
+                <label for="uid">工号 / 邮箱</label>
+                <input type="text" id="uid" placeholder="EI-XXXXXX 或 user@endfield.com" autocomplete="username">
+            </div>
+            <div class="form-group">
+                <label for="pwd">密码</label>
+                <input type="password" id="pwd" placeholder="••••••••" autocomplete="current-password">
+            </div>
+            <div class="form-options">
+                <label><input type="checkbox"> 保持登录</label>
+                <a href="#">忘记密码？</a>
+            </div>
+            <button type="submit" class="btn-submit">LOGIN →</button>
+        </form>
+        <div class="login-divider">或</div>
+        <a href="employee.html" class="btn-employee">VIEW TEAM DIRECTORY →</a>
+    </div>
+</div>
+
+</body>
+</html>

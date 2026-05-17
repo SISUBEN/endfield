@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>产品目录 — 终末地工业</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+        --bg-white: #ffffff;
+        --bg-light: #fafafa;
+        --bg-dark: #191919;
+        --accent: #fffa00;
+        --text-black: #191919;
+        --text-gray: #666666;
+        --text-light: #999999;
+        --border: #e5e5e5;
+        --font-en: 'Rajdhani', sans-serif;
+    }
+    body {
+        font-family: 'PingFang SC', 'Noto Sans SC', sans-serif;
+        background: var(--bg-white);
+        color: var(--text-black);
+    }
+    .page-content {
+        animation: pageIn .35s ease both;
+    }
+    @keyframes pageIn {
+        from { opacity: 0; transform: translateY(12px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+    /* NAV */
+    .site-nav {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        z-index: 1000;
+        height: 4.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 3rem;
+        background: rgba(255,255,255,0.95);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--border);
+    }
+    .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        text-decoration: none;
+    }
+    .nav-brand img { height: 26px; }
+    .nav-brand-text {
+        font-family: var(--font-en);
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+        color: var(--text-gray);
+    }
+    .nav-menu {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+    }
+    .nav-menu a {
+        color: var(--text-gray);
+        text-decoration: none;
+        font-family: var(--font-en);
+        font-size: 0.9rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+        transition: color .2s ease;
+    }
+    .nav-menu a:hover, .nav-menu a.active { color: var(--text-black); }
+    .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+    .nav-actions a {
+        font-family: var(--font-en);
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-decoration: none;
+        color: var(--text-gray);
+        transition: color .2s ease;
+    }
+    .nav-actions a:hover { color: var(--text-black); }
+    .nav-actions .nav-login {
+        padding: 0.4rem 1rem;
+        background: var(--bg-dark);
+        color: #fff;
+        border-radius: .25rem;
+    }
+    .nav-actions .nav-login:hover { color: var(--accent); }
+    /* PAGE HEADER */
+    .page-header {
+        margin-top: 4.5rem;
+        padding: 5rem 3rem 3.5rem;
+        background: linear-gradient(to bottom, #fff, #fffa00);
+        border-bottom: 1px solid var(--border);
+    }
+    .page-header .breadcrumb {
+        font-family: var(--font-en);
+        font-size: 0.7rem;
+        letter-spacing: 2px;
+        color: var(--text-light);
+        margin-bottom: 1.25rem;
+    }
+    .page-header .breadcrumb a { color: var(--text-light); text-decoration: none; }
+    .page-header .breadcrumb a:hover { color: var(--text-black); }
+    .page-header h1 {
+        font-family: var(--font-en);
+        font-size: 2.8rem;
+        font-weight: 700;
+        letter-spacing: 3px;
+        color: var(--text-black);
+        line-height: 1.1;
+    }
+    .page-header p {
+        margin-top: 0.75rem;
+        font-size: 0.95rem;
+        color: var(--text-gray);
+        max-width: 480px;
+    }
+    /* FILTER BAR */
+    .filter-bar {
+        padding: 1.25rem 3rem;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        background: var(--bg-white);
+        position: sticky;
+        top: 4.5rem;
+        z-index: 10;
+    }
+    .filter-btn {
+        padding: 0.4rem 1rem;
+        border: 1px solid var(--border);
+        border-radius: .25rem;
+        background: transparent;
+        font-family: var(--font-en);
+        font-size: 0.72rem;
+        letter-spacing: 1px;
+        color: var(--text-gray);
+        cursor: pointer;
+        transition: all .2s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+        background: var(--bg-dark);
+        border-color: var(--bg-dark);
+        color: #fff;
+    }
+    /* PRODUCT GRID */
+    .products-section {
+        padding: 3rem;
+    }
+    .section-label {
+        font-family: var(--font-en);
+        font-size: 0.7rem;
+        letter-spacing: 3px;
+        color: var(--text-light);
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid var(--border);
+    }
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+    }
+    .product-card {
+        border: 1px solid var(--border);
+        border-radius: .25rem;
+        overflow: hidden;
+        transition: box-shadow .2s, transform .2s;
+        background: var(--bg-white);
+    }
+    .product-card:hover {
+        box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+        transform: translateY(-2px);
+    }
+    .product-thumb {
+        height: 180px;
+        background: var(--bg-dark);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+    }
+    .product-thumb .thumb-icon {
+        color: rgba(255,250,0,0.15);
+        font-size: 5rem;
+        font-family: var(--font-en);
+        font-weight: 700;
+        letter-spacing: -4px;
+        user-select: none;
+    }
+    .product-thumb .product-tag {
+        position: absolute;
+        top: 1rem; left: 1rem;
+        padding: 0.25rem 0.6rem;
+        background: var(--accent);
+        color: var(--bg-dark);
+        font-family: var(--font-en);
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        border-radius: .25rem;
+    }
+    .product-body {
+        padding: 1.25rem;
+    }
+    .product-id {
+        font-family: var(--font-en);
+        font-size: 0.65rem;
+        letter-spacing: 2px;
+        color: var(--text-light);
+        margin-bottom: 0.4rem;
+    }
+    .product-name {
+        font-family: var(--font-en);
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        color: var(--text-black);
+        margin-bottom: 0.25rem;
+    }
+    .product-name-cn {
+        font-size: 0.85rem;
+        color: var(--text-gray);
+        margin-bottom: 0.75rem;
+    }
+    .product-desc {
+        font-size: 0.8rem;
+        color: var(--text-light);
+        line-height: 1.6;
+        margin-bottom: 1rem;
+    }
+    .product-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 0.75rem;
+        border-top: 1px solid var(--border);
+    }
+    .product-status {
+        font-family: var(--font-en);
+        font-size: 0.65rem;
+        letter-spacing: 1px;
+        color: var(--text-light);
+    }
+    .product-status.available { color: #00a86b; }
+    .product-status.restricted { color: #e05c00; }
+    .btn-detail {
+        font-family: var(--font-en);
+        font-size: 0.7rem;
+        letter-spacing: 1px;
+        color: var(--text-black);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        transition: gap .2s;
+    }
+    .btn-detail:hover { gap: 0.6rem; }
+    /* FOOTER */
+    .site-footer {
+        padding: 2.5rem 3rem;
+        background: var(--bg-dark);
+    }
+    .footer-inner {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+    .footer-logo { height: 20px; opacity: 0.5; filter: brightness(0) invert(1); }
+    .footer-copy {
+        font-size: 0.72rem;
+        color: rgba(255,255,255,0.4);
+        letter-spacing: 0.5px;
+    }
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+    <a href="index.html" class="nav-brand">
+        <img src="assets/endfield-industries.svg" alt="Endfield Industries">
+        <span class="nav-brand-text">ENDFIELD INDUSTRIES</span>
+    </a>
+    <ul class="nav-menu">
+        <li><a href="index.html#about">ABOUT</a></li>
+        <li><a href="products.html" class="active">PRODUCTS</a></li>
+        <li><a href="index.html#services">SERVICES</a></li>
+        <li><a href="index.html#news">NEWS</a></li>
+        <li><a href="index.html#join">JOIN</a></li>
+    </ul>
+    <div class="nav-actions">
+        <a href="employee.html">EMPLOYEE</a>
+        <a href="login.html" class="nav-login">LOGIN</a>
+    </div>
+</header>
+
+<div class="page-content">
+<div class="page-header">
+    <p class="breadcrumb"><a href="index.html">HOME</a> / PRODUCTS</p>
+    <h1>PRODUCT<br>CATALOG</h1>
+    <p>终末地工业核心技术与装备体系，涵盖自动化工业、协议源石传送、轨道后勤与前线防御解决方案</p>
+</div>
+
+<div class="filter-bar">
+    <button class="filter-btn active">ALL</button>
+    <button class="filter-btn">CONSTRUCTION</button>
+    <button class="filter-btn">ENERGY</button>
+    <button class="filter-btn">LOGISTICS</button>
+    <button class="filter-btn">DEFENSE</button>
+    <button class="filter-btn">RESEARCH</button>
+</div>
+
+<section class="products-section">
+    <p class="section-label">FEATURED PRODUCTS — 06 ITEMS</p>
+    <div class="product-grid">
+
+        <div class="product-card">
+            <div class="product-thumb">
+                <span class="thumb-icon">AIC</span>
+                <span class="product-tag">CONSTRUCTION</span>
+            </div>
+            <div class="product-body">
+                <p class="product-id">EI-AIC-7700</p>
+                <p class="product-name">AUTOMATED INDUSTRY COMPLEX</p>
+                <p class="product-name-cn">自动化工业综合体</p>
+                <p class="product-desc">终末地工业旗舰技术，实现工业生产机械的小型化与模块化。小型专业团队即可在前线快速部署完整自动化生产线，支持资源采集、精炼加工与物流全流程自动化。</p>
+                <div class="product-footer">
+                    <span class="product-status available">● AVAILABLE</span>
+                    <a href="#" class="btn-detail">DETAILS →</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-thumb">
+                <span class="thumb-icon">PRG</span>
+                <span class="product-tag">ENERGY</span>
+            </div>
+            <div class="product-body">
+                <p class="product-id">EI-PRG-3300</p>
+                <p class="product-name">PROTOCOL-ORIGINIUM SYSTEM</p>
+                <p class="product-name-cn">协议源石传送系统</p>
+                <p class="product-desc">基于协议源石晶体构建的远距离传送网络，可实现人员与物资的跨区域即时传输。与帝江号主协议系统联动，为塔卫-II前线作业提供关键后勤支援。</p>
+                <div class="product-footer">
+                    <span class="product-status available">● AVAILABLE</span>
+                    <a href="#" class="btn-detail">DETAILS →</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-thumb">
+                <span class="thumb-icon">OMV</span>
+                <span class="product-tag">LOGISTICS</span>
+            </div>
+            <div class="product-body">
+                <p class="product-id">EI-OMV-9100</p>
+                <p class="product-name">ORBITAL MOBILE VEHICLE DIJIANG</p>
+                <p class="product-name-cn">帝江号轨道机动载具</p>
+                <p class="product-desc">塔卫-II唯一在轨载具，终末地工业总部所在。搭载大型协议源石核心，维持主协议系统运行，统筹调度全球AIC网络与传送节点。</p>
+                <div class="product-footer">
+                    <span class="product-status restricted">● RESTRICTED</span>
+                    <a href="#" class="btn-detail">DETAILS →</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-thumb">
+                <span class="thumb-icon">AWS</span>
+                <span class="product-tag">DEFENSE</span>
+            </div>
+            <div class="product-body">
+                <p class="product-id">EI-AWS-2200</p>
+                <p class="product-name">ARSENAL WEAPONS SYSTEM</p>
+                <p class="product-name-cn">军械武器系统</p>
+                <p class="product-desc">终末地工业军械部门研发的系列化武器装备，涵盖 Darhoff 7、Jiminy 12、Opero 77、Peco 5、Tarr 11 等型号，专为应对阿格洛伊威胁与塔卫-II极端环境设计。</p>
+                <div class="product-footer">
+                    <span class="product-status restricted">● RESTRICTED</span>
+                    <a href="#" class="btn-detail">DETAILS →</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-thumb">
+                <span class="thumb-icon">CTD</span>
+                <span class="product-tag">DEFENSE</span>
+            </div>
+            <div class="product-body">
+                <p class="product-id">EI-CTD-4400</p>
+                <p class="product-name">COMBAT TOWER DEFENSE ARRAY</p>
+                <p class="product-name-cn">战斗防御塔阵列</p>
+                <p class="product-desc">多型号自动化防御塔系统，涵盖电磁炮塔、液氮减速塔、高能光束塔、酸液投掷塔等，为AIC基地提供全方位主动防御，有效拦截阿格洛伊入侵。</p>
+                <div class="product-footer">
+                    <span class="product-status available">● AVAILABLE</span>
+                    <a href="#" class="btn-detail">DETAILS →</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-thumb">
+                <span class="thumb-icon">OSP</span>
+                <span class="product-tag">RESEARCH</span>
+            </div>
+            <div class="product-body">
+                <p class="product-id">EI-OSP-5500</p>
+                <p class="product-name">ORIGINIUM SCIENCE PARK</p>
+                <p class="product-name-cn">源石科学园区</p>
+                <p class="product-desc">集源石矿物分析、协议源石研发与新型工业材料测试于一体的综合研究设施，为终末地工业的技术创新与前线部署提供核心科研支撑。</p>
+                <div class="product-footer">
+                    <span class="product-status available">● AVAILABLE</span>
+                    <a href="#" class="btn-detail">DETAILS →</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+</div><!-- /.page-content -->
+
+<footer class="site-footer">
+    <div class="footer-inner">
+        <img src="assets/endfield-industries.svg" alt="" class="footer-logo">
+        <p class="footer-copy">Endfield Industries &copy; GRYPHLINE / HYPERGRYPH. All Rights Reserved.</p>
+    </div>
+</footer>
+
+<script>
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>团队成员 — 终末地工业</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+        --bg-white: #ffffff;
+        --bg-light: #fafafa;
+        --bg-dark: #191919;
+        --accent: #fffa00;
+        --text-black: #191919;
+        --text-gray: #666666;
+        --text-light: #999999;
+        --border: #e5e5e5;
+        --font-en: 'Rajdhani', sans-serif;
+    }
+    body {
+        font-family: 'PingFang SC', 'Noto Sans SC', sans-serif;
+        background: var(--bg-white);
+        color: var(--text-black);
+    }
+    .page-content {
+        animation: pageIn .35s ease both;
+    }
+    @keyframes pageIn {
+        from { opacity: 0; transform: translateY(12px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+    /* NAV */
+    .site-nav {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        z-index: 1000;
+        height: 4.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 3rem;
+        background: rgba(255,255,255,0.95);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--border);
+    }
+    .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        text-decoration: none;
+    }
+    .nav-brand img { height: 26px; }
+    .nav-brand-text {
+        font-family: var(--font-en);
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+        color: var(--text-gray);
+    }
+    .nav-menu {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+    }
+    .nav-menu a {
+        color: var(--text-gray);
+        text-decoration: none;
+        font-family: var(--font-en);
+        font-size: 0.9rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+        transition: color .2s ease;
+    }
+    .nav-menu a:hover, .nav-menu a.active { color: var(--text-black); }
+    .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+    .nav-actions a {
+        font-family: var(--font-en);
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-decoration: none;
+        color: var(--text-gray);
+        transition: color .2s ease;
+    }
+    .nav-actions a:hover { color: var(--text-black); }
+    .nav-actions .nav-login {
+        padding: 0.4rem 1rem;
+        background: var(--bg-dark);
+        color: #fff;
+        border-radius: .25rem;
+    }
+    .nav-actions .nav-login:hover { color: var(--accent); }
+    /* PAGE HEADER */
+    .page-header {
+        margin-top: 4.5rem;
+        padding: 5rem 3rem 3.5rem;
+        background: linear-gradient(to bottom, #fff, #fffa00);
+        border-bottom: 1px solid var(--border);
+    }
+    .page-header .breadcrumb {
+        font-family: var(--font-en);
+        font-size: 0.7rem;
+        letter-spacing: 2px;
+        color: var(--text-light);
+        margin-bottom: 1.25rem;
+    }
+    .page-header .breadcrumb a { color: var(--text-light); text-decoration: none; }
+    .page-header .breadcrumb a:hover { color: var(--text-black); }
+    .page-header h1 {
+        font-family: var(--font-en);
+        font-size: 2.8rem;
+        font-weight: 700;
+        letter-spacing: 3px;
+        color: var(--text-black);
+        line-height: 1.1;
+    }
+    .page-header p {
+        margin-top: 0.75rem;
+        font-size: 0.95rem;
+        color: var(--text-gray);
+        max-width: 480px;
+    }
+    /* LEADERSHIP */
+    .section {
+        padding: 4rem 3rem;
+    }
+    .section + .section {
+        border-top: 1px solid var(--border);
+    }
+    .section-header {
+        display: flex;
+        align-items: baseline;
+        gap: 1.5rem;
+        margin-bottom: 2.5rem;
+    }
+    .section-title {
+        font-family: var(--font-en);
+        font-size: 1.1rem;
+        font-weight: 700;
+        letter-spacing: 3px;
+        color: var(--text-black);
+    }
+    .section-label {
+        font-family: var(--font-en);
+        font-size: 0.65rem;
+        letter-spacing: 2px;
+        color: var(--text-light);
+    }
+    /* LEADERSHIP CARDS — large horizontal */
+    .leadership-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+    .leader-card {
+        border: 1px solid var(--border);
+        border-radius: .25rem;
+        overflow: hidden;
+        transition: box-shadow .2s, transform .2s;
+    }
+    .leader-card:hover {
+        box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+        transform: translateY(-3px);
+    }
+    .leader-portrait {
+        height: 220px;
+        background: var(--bg-dark);
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-start;
+        padding: 1.25rem;
+        position: relative;
+        overflow: hidden;
+    }
+    .leader-portrait::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(255,250,0,0.06) 0%, transparent 60%);
+    }
+    .leader-portrait .portrait-initials {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -60%);
+        font-family: var(--font-en);
+        font-size: 4.5rem;
+        font-weight: 700;
+        color: rgba(255,250,0,0.08);
+        letter-spacing: -4px;
+        user-select: none;
+    }
+    .leader-portrait .portrait-id {
+        font-family: var(--font-en);
+        font-size: 0.62rem;
+        letter-spacing: 2px;
+        color: rgba(255,255,255,0.3);
+        position: relative;
+        z-index: 1;
+    }
+    .leader-body {
+        padding: 1.25rem;
+    }
+    .leader-role {
+        font-family: var(--font-en);
+        font-size: 0.65rem;
+        letter-spacing: 2px;
+        color: var(--text-light);
+        margin-bottom: 0.4rem;
+    }
+    .leader-name {
+        font-family: var(--font-en);
+        font-size: 1.1rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        color: var(--text-black);
+        margin-bottom: 0.2rem;
+    }
+    .leader-name-cn {
+        font-size: 0.9rem;
+        color: var(--text-gray);
+        margin-bottom: 0.85rem;
+    }
+    .leader-bio {
+        font-size: 0.8rem;
+        color: var(--text-light);
+        line-height: 1.65;
+        border-top: 1px solid var(--border);
+        padding-top: 0.85rem;
+    }
+    /* STAFF TABLE */
+    .staff-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .staff-table th {
+        font-family: var(--font-en);
+        font-size: 0.65rem;
+        letter-spacing: 2px;
+        color: var(--text-light);
+        text-align: left;
+        padding: 0.6rem 1rem;
+        border-bottom: 2px solid var(--border);
+        background: var(--bg-light);
+    }
+    .staff-table td {
+        padding: 0.85rem 1rem;
+        border-bottom: 1px solid var(--border);
+        font-size: 0.85rem;
+        color: var(--text-black);
+        vertical-align: middle;
+    }
+    .staff-table tr:last-child td { border-bottom: none; }
+    .staff-table tr:hover td { background: var(--bg-light); }
+    .staff-id {
+        font-family: var(--font-en);
+        font-size: 0.7rem;
+        letter-spacing: 1px;
+        color: var(--text-light);
+    }
+    .staff-dept {
+        display: inline-block;
+        padding: 0.2rem 0.55rem;
+        border: 1px solid var(--border);
+        border-radius: 2px;
+        font-family: var(--font-en);
+        font-size: 0.62rem;
+        letter-spacing: 1px;
+        color: var(--text-gray);
+    }
+    .staff-level {
+        display: inline-block;
+        width: 8px; height: 8px;
+        border-radius: 50%;
+        margin-right: 0.4rem;
+        vertical-align: middle;
+    }
+    .level-s { background: #c0392b; }
+    .level-a { background: #e07b00; }
+    .level-b { background: #27ae60; }
+    .level-c { background: var(--text-light); }
+    /* FOOTER */
+    .site-footer {
+        padding: 2.5rem 3rem;
+        background: var(--bg-dark);
+    }
+    .footer-inner { display: flex; align-items: center; gap: 1.5rem; }
+    .footer-logo { height: 20px; opacity: 0.5; filter: brightness(0) invert(1); }
+    .footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.4); letter-spacing: 0.5px; }
+    @media (max-width: 900px) {
+        .leadership-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+        .leadership-grid { grid-template-columns: 1fr; }
+        .site-nav { padding: 0 1.5rem; }
+        .nav-brand-text, .nav-menu { display: none; }
+        .section { padding: 3rem 1.5rem; }
+        .page-header { padding: 4rem 1.5rem 2.5rem; }
+    }
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+    <a href="index.html" class="nav-brand">
+        <img src="assets/endfield-industries.svg" alt="Endfield Industries">
+        <span class="nav-brand-text">ENDFIELD INDUSTRIES</span>
+    </a>
+    <ul class="nav-menu">
+        <li><a href="index.html#about">ABOUT</a></li>
+        <li><a href="products.html">PRODUCTS</a></li>
+        <li><a href="index.html#services">SERVICES</a></li>
+        <li><a href="index.html#news">NEWS</a></li>
+        <li><a href="index.html#join">JOIN</a></li>
+    </ul>
+    <div class="nav-actions">
+        <a href="employee.html" class="active">EMPLOYEE</a>
+        <a href="login.html" class="nav-login">LOGIN</a>
+    </div>
+</header>
+
+<div class="page-content">
+<div class="page-header">
+    <p class="breadcrumb"><a href="index.html">HOME</a> / TEAM</p>
+    <h1>OUR<br>TEAM</h1>
+    <p>终末地工业核心团队与各部门成员，共同推进塔卫-II的开拓事业</p>
+</div>
+
+<!-- LEADERSHIP -->
+<section class="section">
+    <div class="section-header">
+        <span class="section-title">LEADERSHIP</span>
+        <span class="section-label">核心管理层</span>
+    </div>
+    <div class="leadership-grid">
+
+        <div class="leader-card">
+            <div class="leader-portrait">
+                <span class="portrait-initials">END</span>
+                <span class="portrait-id">EI-000001 · FOUNDER</span>
+            </div>
+            <div class="leader-body">
+                <p class="leader-role">ENDMINISTRATOR · 管理员</p>
+                <p class="leader-name">ENDMINISTRATOR</p>
+                <p class="leader-name-cn">管理员</p>
+                <p class="leader-bio">终末地工业的创始人与最高领导者。曾在塔卫-II与终末地发生重大变故时多次挺身而出，留下大量传说。对源石与协议网络拥有神秘的掌控能力，需定期进入长期休眠。其真实身份至今仍是公司最高机密。</p>
+            </div>
+        </div>
+
+        <div class="leader-card">
+            <div class="leader-portrait">
+                <span class="portrait-initials">SUP</span>
+                <span class="portrait-id">EI-000002 · SUPERVISOR</span>
+            </div>
+            <div class="leader-body">
+                <p class="leader-role">SUPERVISOR · 监督官</p>
+                <p class="leader-name">PERLICA</p>
+                <p class="leader-name-cn">佩丽卡</p>
+                <p class="leader-bio">终末地工业监督官，该职位由其亲自创立，统筹公司全部运营并担任官方发言人。Techno-Protocol 领域顶尖专家，主导了 Protocol-Originium 技术的自适应研究，并参与完善了自动化工业综合体（AIC）。管理员休眠期间曾代为指挥危机小组。</p>
+            </div>
+        </div>
+
+        <div class="leader-card">
+            <div class="leader-portrait">
+                <span class="portrait-initials">PHY</span>
+                <span class="portrait-id">EI-000010 · SPECIALIST</span>
+            </div>
+            <div class="leader-body">
+                <p class="leader-role">SENIOR ORIGINIUM PHYSICIST · 高级源石物理学家</p>
+                <p class="leader-name">AQUITO</p>
+                <p class="leader-name-cn">阿奎托</p>
+                <p class="leader-bio">终末地工业高级源石物理学家，负责公司核心技术研究方向。专注于源石能量转化与极端环境应用领域，是公司技术壁垒的核心构建者之一。</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- STAFF DIRECTORY -->
+<section class="section" style="background: var(--bg-light);">
+    <div class="section-header">
+        <span class="section-title">STAFF DIRECTORY</span>
+        <span class="section-label">成员名录</span>
+    </div>
+    <table class="staff-table">
+        <thead>
+            <tr>
+                <th>NAME</th>
+                <th>中文名</th>
+                <th>TITLE</th>
+                <th>DEPARTMENT</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Salman</td>
+                <td>萨尔曼</td>
+                <td>枢纽基地物流总监</td>
+                <td><span class="staff-dept">LOGISTICS</span></td>
+            </tr>
+            <tr>
+                <td>Semyon</td>
+                <td>谢苗</td>
+                <td>武器库工程师</td>
+                <td><span class="staff-dept">ENGINEERING</span></td>
+            </tr>
+            <tr>
+                <td>Darhoff</td>
+                <td>达霍夫</td>
+                <td>武器库工程师 · Darhoff 7 设计者</td>
+                <td><span class="staff-dept">ENGINEERING</span></td>
+            </tr>
+            <tr>
+                <td>Jiminy</td>
+                <td>吉米尼</td>
+                <td>武器库工程师 · Jiminy 12 设计者</td>
+                <td><span class="staff-dept">ENGINEERING</span></td>
+            </tr>
+            <tr>
+                <td>Opero</td>
+                <td>奥佩罗</td>
+                <td>高级武器库工程师 · Opero 77 设计者</td>
+                <td><span class="staff-dept">ENGINEERING</span></td>
+            </tr>
+            <tr>
+                <td>Peco</td>
+                <td>佩科</td>
+                <td>武器库工程师 · Peco 5 设计者</td>
+                <td><span class="staff-dept">ENGINEERING</span></td>
+            </tr>
+            <tr>
+                <td>Tarr</td>
+                <td>塔尔</td>
+                <td>武器库工程师 · Tarr 11 设计者</td>
+                <td><span class="staff-dept">ENGINEERING</span></td>
+            </tr>
+            <tr>
+                <td>Bronzer / Copper</td>
+                <td>—</td>
+                <td>工程操作员</td>
+                <td><span class="staff-dept">ENGINEERING</span></td>
+            </tr>
+            <tr>
+                <td>Martin Marvin Malen</td>
+                <td>—</td>
+                <td>人力资源部机械构造体助理</td>
+                <td><span class="staff-dept">HR</span></td>
+            </tr>
+            <tr>
+                <td>M3</td>
+                <td>—</td>
+                <td>第零指令执行者</td>
+                <td><span class="staff-dept">SPECIALIST TECH</span></td>
+            </tr>
+            <tr>
+                <td>Thurston</td>
+                <td>瑟斯顿</td>
+                <td>成员</td>
+                <td><span class="staff-dept">—</span></td>
+            </tr>
+            <tr>
+                <td>Maggie</td>
+                <td>玛吉</td>
+                <td>奖品兑换员</td>
+                <td><span class="staff-dept">ADMINISTRATION</span></td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<!-- OPERATORS -->
+<section class="section">
+    <div class="section-header">
+        <span class="section-title">OPERATORS</span>
+        <span class="section-label">在编干员</span>
+    </div>
+    <table class="staff-table">
+        <thead>
+            <tr>
+                <th>NAME</th>
+                <th>中文名</th>
+                <th>CLASS</th>
+                <th>DEPARTMENT</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Chen Qianyu</td>
+                <td>陈千羽</td>
+                <td><span class="staff-dept">GUARD</span></td>
+                <td><span class="staff-dept">SPECIALIST TECH</span></td>
+            </tr>
+            <tr>
+                <td>Estella</td>
+                <td>—</td>
+                <td><span class="staff-dept">GUARD</span></td>
+                <td><span class="staff-dept">SPECIALIST TECH</span></td>
+            </tr>
+            <tr>
+                <td>Rossi</td>
+                <td>—</td>
+                <td><span class="staff-dept">GUARD</span></td>
+                <td><span class="staff-dept">SPECIALIST TECH</span></td>
+            </tr>
+            <tr>
+                <td>Lifeng</td>
+                <td>—</td>
+                <td><span class="staff-dept">GUARD</span></td>
+                <td><span class="staff-dept">SPECIALIST TECH</span></td>
+            </tr>
+            <tr>
+                <td>Catcher</td>
+                <td>—</td>
+                <td><span class="staff-dept">DEFENDER</span></td>
+                <td><span class="staff-dept">SPECIALIST TECH</span></td>
+            </tr>
+            <tr>
+                <td>Ember</td>
+                <td>—</td>
+                <td><span class="staff-dept">DEFENDER</span></td>
+                <td><span class="staff-dept">SPECIALIST TECH</span></td>
+            </tr>
+            <tr>
+                <td>Snowshine</td>
+                <td>—</td>
+                <td><span class="staff-dept">DEFENDER</span></td>
+                <td><span class="staff-dept">SPECIALIST TECH</span></td>
+            </tr>
+            <tr>
+                <td>Tangtang</td>
+                <td>—</td>
+                <td><span class="staff-dept">CASTER</span></td>
+                <td><span class="staff-dept">SPECIALIST TECH</span></td>
+            </tr>
+            <tr>
+                <td>Wulfgard</td>
+                <td>—</td>
+                <td><span class="staff-dept">CASTER</span></td>
+                <td><span class="staff-dept">SPECIALIST TECH</span></td>
+            </tr>
+            <tr>
+                <td>Fluorite</td>
+                <td>—</td>
+                <td><span class="staff-dept">CASTER</span></td>
+                <td><span class="staff-dept">SPECIALIST TECH</span></td>
+            </tr>
+            <tr>
+                <td>Antal</td>
+                <td>—</td>
+                <td><span class="staff-dept">SUPPORTER</span></td>
+                <td><span class="staff-dept">SPECIALIST TECH</span></td>
+            </tr>
+            <tr>
+                <td>Ardelia</td>
+                <td>—</td>
+                <td><span class="staff-dept">SUPPORTER</span></td>
+                <td><span class="staff-dept">SPECIALIST TECH</span></td>
+            </tr>
+            <tr>
+                <td>Gilberta</td>
+                <td>—</td>
+                <td><span class="staff-dept">SUPPORTER</span></td>
+                <td><span class="staff-dept">SPECIALIST TECH</span></td>
+            </tr>
+            <tr>
+                <td>Xaihi</td>
+                <td>—</td>
+                <td><span class="staff-dept">SUPPORTER</span></td>
+                <td><span class="staff-dept">SPECIALIST TECH</span></td>
+            </tr>
+            <tr>
+                <td>Yvonne</td>
+                <td>—</td>
+                <td><span class="staff-dept">STRIKER</span></td>
+                <td><span class="staff-dept">SPECIALIST TECH</span></td>
+            </tr>
+            <tr>
+                <td>Zhuang Fangyi</td>
+                <td>庄方仪</td>
+                <td><span class="staff-dept">STRIKER</span></td>
+                <td><span class="staff-dept">SPECIALIST TECH</span></td>
+            </tr>
+            <tr>
+                <td>Laevatain</td>
+                <td>—</td>
+                <td><span class="staff-dept">STRIKER</span></td>
+                <td><span class="staff-dept">SPECIALIST TECH</span></td>
+            </tr>
+            <tr>
+                <td>Last Rite</td>
+                <td>—</td>
+                <td><span class="staff-dept">STRIKER</span></td>
+                <td><span class="staff-dept">SPECIALIST TECH</span></td>
+            </tr>
+            <tr>
+                <td>Avywenna</td>
+                <td>—</td>
+                <td><span class="staff-dept">STRIKER</span></td>
+                <td><span class="staff-dept">SPECIALIST TECH</span></td>
+            </tr>
+            <tr>
+                <td>Da Pan</td>
+                <td>大盘</td>
+                <td><span class="staff-dept">STRIKER</span></td>
+                <td><span class="staff-dept">SPECIALIST TECH</span></td>
+            </tr>
+            <tr>
+                <td>Akekuri</td>
+                <td>—</td>
+                <td><span class="staff-dept">VANGUARD</span></td>
+                <td><span class="staff-dept">SPECIALIST TECH</span></td>
+            </tr>
+            <tr>
+                <td>Alesh</td>
+                <td>—</td>
+                <td><span class="staff-dept">VANGUARD</span></td>
+                <td><span class="staff-dept">SPECIALIST TECH</span></td>
+            </tr>
+            <tr>
+                <td>Arclight</td>
+                <td>—</td>
+                <td><span class="staff-dept">VANGUARD</span></td>
+                <td><span class="staff-dept">SPECIALIST TECH</span></td>
+            </tr>
+            <tr>
+                <td>Pogranichnik</td>
+                <td>—</td>
+                <td><span class="staff-dept">VANGUARD</span></td>
+                <td><span class="staff-dept">SPECIALIST TECH</span></td>
+            </tr>
+            <tr>
+                <td>Andre</td>
+                <td>—</td>
+                <td><span class="staff-dept">—</span></td>
+                <td><span class="staff-dept">SPECIALIST TECH</span></td>
+            </tr>
+            <tr>
+                <td>Fiona</td>
+                <td>—</td>
+                <td><span class="staff-dept">—</span></td>
+                <td><span class="staff-dept">SPECIALIST TECH</span></td>
+            </tr>
+            <tr>
+                <td>Qin Jiangchi</td>
+                <td>秦江迟</td>
+                <td><span class="staff-dept">—</span></td>
+                <td><span class="staff-dept">SPECIALIST TECH</span></td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+</div><!-- /.page-content -->
+
+<footer class="site-footer">
+    <div class="footer-inner">
+        <img src="assets/endfield-industries.svg" alt="" class="footer-logo">
+        <p class="footer-copy">Endfield Industries &copy; GRYPHLINE / HYPERGRYPH. All Rights Reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>
