@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>加入我们 — 终末地工业</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+        --bg-white: #ffffff;
+        --bg-light: #fafafa;
+        --bg-dark: #191919;
+        --accent: #fffa00;
+        --text-black: #191919;
+        --text-gray: #666666;
+        --text-light: #999999;
+        --border: #e5e5e5;
+        --font-en: 'Rajdhani', sans-serif;
+    }
+    body {
+        font-family: 'Noto Sans SC', 'PingFang SC', sans-serif;
+        background: var(--bg-white);
+        color: var(--text-black);
+    }
+    .page-content { animation: pageIn .35s ease both; }
+    @keyframes pageIn {
+        from { opacity: 0; transform: translateY(12px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+    /* NAV */
+    .site-nav {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        z-index: 1000;
+        height: 4.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 3rem;
+        background: rgba(255,255,255,0.95);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--border);
+    }
+    .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        text-decoration: none;
+    }
+    .nav-brand img { height: 26px; }
+    .nav-brand-text {
+        font-family: var(--font-en);
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+        color: var(--text-gray);
+    }
+    .nav-menu {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+    }
+    .nav-menu a {
+        color: var(--text-gray);
+        text-decoration: none;
+        font-family: var(--font-en);
+        font-size: 0.9rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+        transition: color .2s ease;
+    }
+    .nav-menu a:hover, .nav-menu a.active { color: var(--text-black); }
+    .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+    .nav-actions a {
+        font-family: var(--font-en);
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-decoration: none;
+        color: var(--text-gray);
+        transition: color .2s ease;
+    }
+    .nav-actions a:hover { color: var(--text-black); }
+    .nav-actions .nav-login {
+        padding: 0.4rem 1rem;
+        background: var(--bg-dark);
+        color: #fff;
+        border-radius: .25rem;
+    }
+    .nav-actions .nav-login:hover { color: var(--accent); }
+
+    /* PAGE HEADER */
+    .page-header {
+        margin-top: 4.5rem;
+        padding: 5rem 3rem 3.5rem;
+        background: linear-gradient(to bottom, #fff, #fffa00);
+        border-bottom: 1px solid var(--border);
+    }
+    .page-header .breadcrumb {
+        font-family: var(--font-en);
+        font-size: 0.7rem;
+        letter-spacing: 2px;
+        color: var(--text-light);
+        margin-bottom: 1.25rem;
+    }
+    .page-header .breadcrumb a { color: var(--text-light); text-decoration: none; }
+    .page-header .breadcrumb a:hover { color: var(--text-black); }
+    .page-header h1 {
+        font-family: var(--font-en);
+        font-size: 2.8rem;
+        font-weight: 700;
+        letter-spacing: 3px;
+        color: var(--text-black);
+        line-height: 1.1;
+    }
+    .page-header p {
+        margin-top: 0.75rem;
+        font-size: 0.95rem;
+        color: var(--text-gray);
+        max-width: 520px;
+    }
+
+    /* STATS BAR */
+    .stats-bar {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        border-bottom: 1px solid var(--border);
+    }
+    .stat-item {
+        padding: 1.75rem 3rem;
+        border-right: 1px solid var(--border);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+        font-family: var(--font-en);
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--text-black);
+        line-height: 1;
+    }
+    .stat-num span {
+        color: var(--accent);
+        -webkit-text-stroke: 1px var(--text-black);
+    }
+    .stat-label {
+        font-family: var(--font-en);
+        font-size: 0.65rem;
+        letter-spacing: 2px;
+        color: var(--text-light);
+        margin-top: 0.4rem;
+    }
+
+    /* FILTER BAR */
+    .filter-bar {
+        padding: 1.25rem 3rem;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        background: var(--bg-white);
+        position: sticky;
+        top: 4.5rem;
+        z-index: 10;
+    }
+    .filter-btn {
+        padding: 0.4rem 1rem;
+        border: 1px solid var(--border);
+        border-radius: .25rem;
+        background: transparent;
+        font-family: var(--font-en);
+        font-size: 0.72rem;
+        letter-spacing: 1px;
+        color: var(--text-gray);
+        cursor: pointer;
+        transition: all .2s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+        background: var(--bg-dark);
+        border-color: var(--bg-dark);
+        color: #fff;
+    }
+
+    /* JOB LISTINGS */
+    .careers-section { padding: 3rem; }
+    .section-label {
+        font-family: var(--font-en);
+        font-size: 0.7rem;
+        letter-spacing: 3px;
+        color: var(--text-light);
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid var(--border);
+    }
+    .job-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        margin-bottom: 3rem;
+    }
+    .job-row {
+        display: grid;
+        grid-template-columns: 1fr 160px 160px 120px 140px;
+        align-items: center;
+        padding: 1.25rem 0;
+        border-bottom: 1px solid var(--border);
+        gap: 1rem;
+        transition: background .15s;
+        cursor: pointer;
+    }
+    .job-row:hover { background: var(--bg-light); margin: 0 -3rem; padding: 1.25rem 3rem; }
+    .job-row:first-child { border-top: 1px solid var(--border); }
+    .job-title-wrap {}
+    .job-title {
+        font-family: var(--font-en);
+        font-size: 0.95rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        color: var(--text-black);
+        margin-bottom: 0.2rem;
+    }
+    .job-title-cn {
+        font-size: 0.8rem;
+        color: var(--text-gray);
+    }
+    .job-dept {
+        font-family: var(--font-en);
+        font-size: 0.72rem;
+        letter-spacing: 1px;
+        color: var(--text-light);
+    }
+    .job-location {
+        font-size: 0.8rem;
+        color: var(--text-gray);
+    }
+    .job-type {
+        font-family: var(--font-en);
+        font-size: 0.68rem;
+        letter-spacing: 1px;
+        color: var(--text-light);
+    }
+    .job-tag {
+        display: inline-block;
+        padding: 0.2rem 0.6rem;
+        border-radius: .25rem;
+        font-family: var(--font-en);
+        font-size: 0.62rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
+    .tag-urgent { background: #fff0e0; color: #c05000; }
+    .tag-open   { background: #e8f8f0; color: #007a4a; }
+    .tag-intern { background: #f0f0ff; color: #3a3aaa; }
+    .job-apply {
+        font-family: var(--font-en);
+        font-size: 0.7rem;
+        letter-spacing: 1px;
+        color: var(--text-black);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        justify-content: flex-end;
+        transition: gap .2s;
+    }
+    .job-apply:hover { gap: 0.6rem; }
+
+    /* PERKS */
+    .perks-section {
+        padding: 3rem;
+        background: var(--bg-dark);
+    }
+    .perks-label {
+        font-family: var(--font-en);
+        font-size: 0.7rem;
+        letter-spacing: 3px;
+        color: rgba(255,255,255,0.3);
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .perks-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 1.5rem;
+    }
+    .perk-card {
+        padding: 1.5rem;
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: .25rem;
+    }
+    .perk-icon {
+        font-family: var(--font-en);
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--accent);
+        margin-bottom: 0.75rem;
+        letter-spacing: -1px;
+    }
+    .perk-title {
+        font-family: var(--font-en);
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        color: #fff;
+        margin-bottom: 0.4rem;
+    }
+    .perk-desc {
+        font-size: 0.78rem;
+        color: rgba(255,255,255,0.4);
+        line-height: 1.6;
+    }
+
+    /* FOOTER */
+    .site-footer { padding: 2.5rem 3rem; background: var(--bg-dark); border-top: 1px solid rgba(255,255,255,0.06); }
+    .footer-inner { display: flex; align-items: center; gap: 1.5rem; }
+    .footer-logo { height: 20px; opacity: 0.5; filter: brightness(0) invert(1); }
+    .footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.4); letter-spacing: 0.5px; }
+
+    @media (max-width: 900px) {
+        .stats-bar { grid-template-columns: repeat(2, 1fr); }
+        .job-row { grid-template-columns: 1fr 120px 100px; }
+        .job-location, .job-type { display: none; }
+    }
+    @media (max-width: 600px) {
+        .site-nav { padding: 0 1.5rem; }
+        .nav-brand-text, .nav-menu { display: none; }
+        .page-header, .careers-section, .perks-section { padding-left: 1.5rem; padding-right: 1.5rem; }
+        .filter-bar { padding: 1rem 1.5rem; }
+        .stats-bar { grid-template-columns: repeat(2, 1fr); }
+        .stat-item { padding: 1.25rem 1.5rem; }
+        .job-row { grid-template-columns: 1fr 100px; }
+        .job-dept, .job-location, .job-type { display: none; }
+        .job-row:hover { margin: 0 -1.5rem; padding: 1.25rem 1.5rem; }
+    }
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+    <a href="index.html" class="nav-brand">
+        <img src="assets/endfield-industries.svg" alt="Endfield Industries">
+        <span class="nav-brand-text">ENDFIELD INDUSTRIES</span>
+    </a>
+    <ul class="nav-menu">
+        <li><a href="index.html#about">ABOUT</a></li>
+        <li><a href="products.html">PRODUCTS</a></li>
+        <li><a href="index.html#services">SERVICES</a></li>
+        <li><a href="index.html#news">NEWS</a></li>
+        <li><a href="careers.html" class="active">JOIN</a></li>
+    </ul>
+    <div class="nav-actions">
+        <a href="employee.html">EMPLOYEE</a>
+        <a href="login.html" class="nav-login">LOGIN</a>
+    </div>
+</header>
+
+<div class="page-content">
+
+<div class="page-header">
+    <p class="breadcrumb"><a href="index.html">HOME</a> / JOIN US</p>
+    <h1>CAREERS AT<br>ENDFIELD</h1>
+    <p>塔卫-II 的前线需要每一位建设者。加入终末地工业，与我们共同推进人类文明的边界。</p>
+</div>
+
+<div class="stats-bar">
+    <div class="stat-item">
+        <p class="stat-num">08</p>
+        <p class="stat-label">OPEN POSITIONS</p>
+    </div>
+    <div class="stat-item">
+        <p class="stat-num">07</p>
+        <p class="stat-label">DEPARTMENTS</p>
+    </div>
+    <div class="stat-item">
+        <p class="stat-num">OMV</p>
+        <p class="stat-label">DIJIANG · TALOS-II</p>
+    </div>
+    <div class="stat-item">
+        <p class="stat-num"><span>∞</span></p>
+        <p class="stat-label">FRONTIER AHEAD</p>
+    </div>
+</div>
+
+<div class="filter-bar">
+    <button class="filter-btn active" data-dept="all">ALL</button>
+    <button class="filter-btn" data-dept="specialist">SPECIALIST TECH</button>
+    <button class="filter-btn" data-dept="engineering">ENGINEERING</button>
+    <button class="filter-btn" data-dept="logistics">LOGISTICS</button>
+    <button class="filter-btn" data-dept="medical">MEDICAL</button>
+    <button class="filter-btn" data-dept="security">SECURITY</button>
+    <button class="filter-btn" data-dept="research">RESEARCH</button>
+</div>
+
+<section class="careers-section">
+    <p class="section-label" id="job-count-label">OPEN POSITIONS — 08 LISTINGS</p>
+    <div class="job-list" id="job-list">
+
+        <div class="job-row" data-dept="specialist">
+            <div class="job-title-wrap">
+                <p class="job-title">CRISIS RESPONSE OPERATOR</p>
+                <p class="job-title-cn">危机响应干员</p>
+            </div>
+            <p class="job-dept">SPECIALIST TECH</p>
+            <p class="job-location">塔卫-II 前线区域</p>
+            <p class="job-type">FULL-TIME</p>
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+                <span class="job-tag tag-urgent">URGENT</span>
+                <a href="#" class="job-apply">APPLY →</a>
+            </div>
+        </div>
+
+        <div class="job-row" data-dept="specialist">
+            <div class="job-title-wrap">
+                <p class="job-title">Z7 OPERATIONS SPECIALIST</p>
+                <p class="job-title-cn">Z7行动组专员</p>
+            </div>
+            <p class="job-dept">SPECIALIST TECH</p>
+            <p class="job-location">帝江号 / 外勤</p>
+            <p class="job-type">FULL-TIME</p>
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+                <span class="job-tag tag-open">OPEN</span>
+                <a href="#" class="job-apply">APPLY →</a>
+            </div>
+        </div>
+
+        <div class="job-row" data-dept="engineering">
+            <div class="job-title-wrap">
+                <p class="job-title">AIC SYSTEMS ENGINEER</p>
+                <p class="job-title-cn">AIC系统工程师</p>
+            </div>
+            <p class="job-dept">ENGINEERING</p>
+            <p class="job-location">帝江号</p>
+            <p class="job-type">FULL-TIME</p>
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+                <span class="job-tag tag-open">OPEN</span>
+                <a href="#" class="job-apply">APPLY →</a>
+            </div>
+        </div>
+
+        <div class="job-row" data-dept="engineering">
+            <div class="job-title-wrap">
+                <p class="job-title">ARSENAL WEAPONS ENGINEER</p>
+                <p class="job-title-cn">军械武器工程师</p>
+            </div>
+            <p class="job-dept">ENGINEERING</p>
+            <p class="job-location">帝江号 制造舱</p>
+            <p class="job-type">FULL-TIME</p>
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+                <span class="job-tag tag-urgent">URGENT</span>
+                <a href="#" class="job-apply">APPLY →</a>
+            </div>
+        </div>
+
+        <div class="job-row" data-dept="logistics">
+            <div class="job-title-wrap">
+                <p class="job-title">HUB BASE LOGISTICS COORDINATOR</p>
+                <p class="job-title-cn">枢纽基地后勤协调员</p>
+            </div>
+            <p class="job-dept">LOGISTICS</p>
+            <p class="job-location">枢纽基地</p>
+            <p class="job-type">FULL-TIME</p>
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+                <span class="job-tag tag-open">OPEN</span>
+                <a href="#" class="job-apply">APPLY →</a>
+            </div>
+        </div>
+
+        <div class="job-row" data-dept="medical">
+            <div class="job-title-wrap">
+                <p class="job-title">FIELD MEDICAL OFFICER</p>
+                <p class="job-title-cn">野外医疗官</p>
+            </div>
+            <p class="job-dept">MEDICAL</p>
+            <p class="job-location">塔卫-II 前线区域</p>
+            <p class="job-type">FULL-TIME</p>
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+                <span class="job-tag tag-urgent">URGENT</span>
+                <a href="#" class="job-apply">APPLY →</a>
+            </div>
+        </div>
+
+        <div class="job-row" data-dept="security">
+            <div class="job-title-wrap">
+                <p class="job-title">SECURITY PATROL OFFICER</p>
+                <p class="job-title-cn">安保巡逻员</p>
+            </div>
+            <p class="job-dept">SECURITY</p>
+            <p class="job-location">帝江号 / 各AIC基地</p>
+            <p class="job-type">FULL-TIME</p>
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+                <span class="job-tag tag-open">OPEN</span>
+                <a href="#" class="job-apply">APPLY →</a>
+            </div>
+        </div>
+
+        <div class="job-row" data-dept="research">
+            <div class="job-title-wrap">
+                <p class="job-title">ORIGINIUM RESEARCH INTERN</p>
+                <p class="job-title-cn">源石研究实习生</p>
+            </div>
+            <p class="job-dept">RESEARCH</p>
+            <p class="job-location">源石科学园区</p>
+            <p class="job-type">INTERNSHIP</p>
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+                <span class="job-tag tag-intern">INTERN</span>
+                <a href="#" class="job-apply">APPLY →</a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- PERKS -->
+<section class="perks-section">
+    <p class="perks-label">WHY ENDFIELD — EMPLOYEE BENEFITS</p>
+    <div class="perks-grid">
+        <div class="perk-card">
+            <p class="perk-icon">AIC</p>
+            <p class="perk-title">FRONTIER ACCESS</p>
+            <p class="perk-desc">全权使用终末地工业AIC系统，在塔卫-II任意区域部署自动化生产线。</p>
+        </div>
+        <div class="perk-card">
+            <p class="perk-icon">TP</p>
+            <p class="perk-title">TELE-PROTOCOL PASS</p>
+            <p class="perk-desc">员工享有协议源石传送网络无限次使用权限，覆盖塔卫-II全境传送节点。</p>
+        </div>
+        <div class="perk-card">
+            <p class="perk-icon">OMV</p>
+            <p class="perk-title">DIJIANG RESIDENCY</p>
+            <p class="perk-desc">帝江号舱位居住权，配备完整生活设施，俯瞰塔卫-II全貌。</p>
+        </div>
+        <div class="perk-card">
+            <p class="perk-icon">MED</p>
+            <p class="perk-title">MEDICAL COVERAGE</p>
+            <p class="perk-desc">医疗部全程保障，含源石病防治、战伤处理及心理健康支持。</p>
+        </div>
+        <div class="perk-card">
+            <p class="perk-icon">R&D</p>
+            <p class="perk-title">RESEARCH GRANTS</p>
+            <p class="perk-desc">源石科学园区开放研究资助，支持员工自主立项与技术创新。</p>
+        </div>
+        <div class="perk-card">
+            <p class="perk-icon">EQP</p>
+            <p class="perk-title">ARSENAL EQUIPMENT</p>
+            <p class="perk-desc">军械部门全系列装备配发，含Darhoff 7、Opero 77等型号，按岗位需求分配。</p>
+        </div>
+    </div>
+</section>
+
+</div><!-- /.page-content -->
+
+<footer class="site-footer">
+    <div class="footer-inner">
+        <img src="assets/endfield-industries.svg" alt="" class="footer-logo">
+        <p class="footer-copy">Endfield Industries &copy; GRYPHLINE / HYPERGRYPH. All Rights Reserved.</p>
+    </div>
+</footer>
+
+<script>
+    const btns = document.querySelectorAll('.filter-btn');
+    const rows = document.querySelectorAll('.job-row');
+    const label = document.getElementById('job-count-label');
+
+    btns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            btns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const dept = btn.dataset.dept;
+            let visible = 0;
+            rows.forEach(row => {
+                const show = dept === 'all' || row.dataset.dept === dept;
+                row.style.display = show ? '' : 'none';
+                if (show) visible++;
+            });
+            label.textContent = `OPEN POSITIONS — ${String(visible).padStart(2,'0')} LISTINGS`;
+        });
+    });
+</script>
+</body>
+</html>
