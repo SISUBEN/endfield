@@ -322,21 +322,88 @@
     .footer-logo { height: 20px; opacity: 0.5; filter: brightness(0) invert(1); }
     .footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.4); letter-spacing: 0.5px; }
 
+    /* HAMBURGER */
+    .nav-hamburger {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        width: 2.25rem;
+        height: 2.25rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.25rem;
+    }
+    .nav-hamburger span {
+        display: block;
+        height: 2px;
+        background: var(--text-black);
+        border-radius: 2px;
+        transition: transform .25s ease, opacity .25s ease;
+        transform-origin: center;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav-drawer {
+        display: none;
+        position: fixed;
+        top: 4.5rem; left: 0; right: 0;
+        background: rgba(255,255,255,0.98);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+        z-index: 999;
+        padding: 1.5rem;
+        flex-direction: column;
+    }
+    .nav-drawer.open { display: flex; }
+    .nav-drawer a {
+        display: block;
+        padding: 0.9rem 0;
+        border-bottom: 1px solid var(--border);
+        font-family: var(--font-en);
+        font-size: 1rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+        color: var(--text-gray);
+        text-decoration: none;
+        transition: color .15s;
+    }
+    .nav-drawer a:last-child { border-bottom: none; }
+    .nav-drawer a:hover, .nav-drawer a.active { color: var(--text-black); }
+    .nav-drawer .drawer-login {
+        margin-top: 1rem;
+        padding: 0.85rem;
+        background: var(--bg-dark);
+        color: #fff;
+        text-align: center;
+        border-radius: .25rem;
+        border-bottom: none;
+    }
+    .nav-drawer .drawer-login:hover { color: var(--accent); }
+
     @media (max-width: 900px) {
         .stats-bar { grid-template-columns: repeat(2, 1fr); }
         .job-row { grid-template-columns: 1fr 120px 100px; }
         .job-location, .job-type { display: none; }
     }
-    @media (max-width: 600px) {
+    @media (max-width: 768px) {
         .site-nav { padding: 0 1.5rem; }
-        .nav-brand-text, .nav-menu { display: none; }
-        .page-header, .careers-section, .perks-section { padding-left: 1.5rem; padding-right: 1.5rem; }
-        .filter-bar { padding: 1rem 1.5rem; }
+        .nav-menu, .nav-actions { display: none; }
+        .nav-hamburger { display: flex; }
+        .page-header { padding: 4rem 1.5rem 2.5rem; }
+        .page-header h1 { font-size: 2.2rem; }
+        .filter-bar { padding: 1rem 1.5rem; overflow-x: auto; flex-wrap: nowrap; }
+        .filter-bar::-webkit-scrollbar { display: none; }
+        .careers-section, .perks-section { padding-left: 1.5rem; padding-right: 1.5rem; }
         .stats-bar { grid-template-columns: repeat(2, 1fr); }
         .stat-item { padding: 1.25rem 1.5rem; }
         .job-row { grid-template-columns: 1fr 100px; }
         .job-dept, .job-location, .job-type { display: none; }
         .job-row:hover { margin: 0 -1.5rem; padding: 1.25rem 1.5rem; }
+        .site-footer { padding: 2rem 1.5rem; }
+        .footer-inner { flex-direction: column; gap: 0.75rem; }
     }
 </style>
 </head>
@@ -358,7 +425,19 @@
         <a href="employee.html">EMPLOYEE</a>
         <a href="login.html" class="nav-login">LOGIN</a>
     </div>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="菜单" aria-expanded="false">
+        <span></span><span></span><span></span>
+    </button>
 </header>
+<nav class="nav-drawer" id="nav-drawer" aria-label="移动端导航">
+    <a href="index.html#about">ABOUT</a>
+    <a href="products.html">PRODUCTS</a>
+    <a href="index.html#services">SERVICES</a>
+    <a href="index.html#news">NEWS</a>
+    <a href="careers.html" class="active">JOIN</a>
+    <a href="employee.html">EMPLOYEE</a>
+    <a href="login.html" class="drawer-login">LOGIN →</a>
+</nav>
 
 <div class="page-content">
 
@@ -579,6 +658,21 @@
                 if (show) visible++;
             });
             label.textContent = `OPEN POSITIONS — ${String(visible).padStart(2,'0')} LISTINGS`;
+        });
+    });
+
+    const hamburger = document.getElementById('nav-hamburger');
+    const drawer = document.getElementById('nav-drawer');
+    hamburger.addEventListener('click', () => {
+        const open = drawer.classList.toggle('open');
+        hamburger.classList.toggle('open', open);
+        hamburger.setAttribute('aria-expanded', open);
+    });
+    drawer.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => {
+            drawer.classList.remove('open');
+            hamburger.classList.remove('open');
+            hamburger.setAttribute('aria-expanded', 'false');
         });
     });
 </script>
